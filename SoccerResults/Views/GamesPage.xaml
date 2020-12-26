@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="SoccerResults.Views.GamesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="{Binding Title}"
+    BackgroundColor="Black">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Name="MenuItem1"
+            Clicked="Handle_Date"
+            Icon="icons8calendar"
+            Order="Primary"
+            Priority="1" />
+        <ToolbarItem
+            Name="MenuItem1"
+            Command="{Binding ForwardOneDay}"
+            Icon="left"
+            Order="Primary"
+            Priority="0" />
+        <ToolbarItem
+            Name="MenuItem2"
+            Command="{Binding BackOneDay}"
+            Icon="right"
+            Order="Primary"
+            Priority="2" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <DatePicker
+                x:Name="datePicker"
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                BackgroundColor="Gray"
+                Date="2019-08-29"
+                DateSelected="getGames"
+                HeightRequest="40"
+                IsVisible="false"
+                MaximumDate="12/31/2025"
+                MinimumDate="01/01/2018" />
+
+            <ListView
+                x:Name="lstGames"
+                Grid.Row="0"
+                Grid.RowSpan="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                BackgroundColor="Black"
+                GroupDisplayBinding="{Binding Key}"
+                HasUnevenRows="true"
+                IsGroupingEnabled="True"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsRefreshing}"
+                ItemTapped="Handle_ItemTapped"
+                ItemsSource="{Binding MyItems}"
+                RefreshCommand="{Binding GetGames}"
+                RowHeight="55"
+                SeparatorColor="WhiteSmoke">
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="35">
+                            <StackLayout
+                                Padding="5"
+                                BackgroundColor="#3498DB"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal">
+                                <Label
+                                    Text="{Binding Key}"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                                <Button
+                                    BackgroundColor="#3498DB"
+                                    Clicked="ImageButton_OnClicked"
+                                    CommandParameter="{Binding key}"
+                                    ContentLayout="Left,5"
+                                    HeightRequest="50"
+                                    HorizontalOptions="EndAndExpand"
+                                    ImageSource="tablegrid"
+                                    Text="{Binding Key}"
+                                    TextColor="#3498DB"
+                                    WidthRequest="50">
+                                    <Button.Scale>
+                                        <OnPlatform
+                                            x:TypeArguments="x:Double"
+                                            Android="1.0"
+                                            iOS="1.0" />
+                                    </Button.Scale>
+                                </Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid Margin="15,0,5,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.4*" />
+                                        <ColumnDefinition Width="0.4*" />
+                                        <ColumnDefinition Width="0.1*" />
+                                        <ColumnDefinition Width="0.1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Text="{Binding homeTeam}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Text="{Binding awayTeam}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="2"
+                                        Text="{Binding homeGoals}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="3"
+                                        Text="{Binding awayGoals}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Text="{Binding gameStart}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding location}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        Grid.ColumnSpan="2"
+                                        Text="{Binding time}"
+                                        TextColor="White" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ActivityIndicator
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                BackgroundColor="Transparent"
+                HeightRequest="50"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Opacity="0.9"
+                VerticalOptions="Center"
+                WidthRequest="50"
+                Color="Red">
+
+                <ActivityIndicator.Scale>
+                    <OnPlatform
+                        x:TypeArguments="x:Double"
+                        Android="1.0"
+                        iOS="2.0" />
+                </ActivityIndicator.Scale>
+            </ActivityIndicator>
+
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Margin="0,0,10,0"
+                HorizontalTextAlignment="End"
+                Text="{Binding UpdatedTime}"
+                TextColor="White" />
+            <Label
+                x:Name="Datum"
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="{Binding SoccerDay}"
+                TextColor="White" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

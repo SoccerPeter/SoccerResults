@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="SoccerResults.Views.EventsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <ListView
+            x:Name="lst"
+            HasUnevenRows="True"
+            Header="True"
+            RowHeight="30"
+            SeparatorVisibility="None">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Margin="5,5,5,0" BackgroundColor="Black">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*" />
+                            <ColumnDefinition Width="0.2*" />
+                            <ColumnDefinition Width="0.4*" />
+                            <ColumnDefinition Width="0.3*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            FontSize="Micro"
+                            Text="Type"
+                            TextColor="White" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="Micro"
+                            Text="Time"
+                            TextColor="White" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="Micro"
+                            Text="Player"
+                            TextColor="White" />
+                        <Label
+                            Grid.Column="3"
+                            FontSize="Micro"
+                            Text="Event"
+                            TextColor="White" />
+                        <Label
+                            Grid.Column="4"
+                            FontSize="Micro"
+                            Text="Team"
+                            TextColor="White" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid Margin="5,0,5,0" BackgroundColor="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.2*" />
+                                    <ColumnDefinition Width="0.2*" />
+                                    <ColumnDefinition Width="0.4*" />
+                                    <ColumnDefinition Width="0.3*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="1"
+                                    FontSize="Micro"
+                                    Text="{Binding Elapsed}"
+                                    TextColor="Black" />
+                                <Label
+                                    Grid.Column="2"
+                                    FontSize="Micro"
+                                    Text="{Binding Player}"
+                                    TextColor="Black" />
+                                <Label
+                                    Grid.Column="3"
+                                    FontSize="Micro"
+                                    Text="{Binding Type}"
+                                    TextColor="Black" />
+                                <Label
+                                    Grid.Column="4"
+                                    FontSize="Micro"
+                                    Text="{Binding Team}"
+                                    TextColor="Black" />
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    Source="{Binding Bild}"
+                                    WidthRequest="25" />
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </ContentPage.Content>
+</ContentPage>
